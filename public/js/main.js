@@ -2,14 +2,18 @@ console.log('js is linked')
 
 var mainVM = new Vue({
   el: '#app',
+
+    beforeCreate() {
+      $.get('/currentList', function(listFromServer) {
+        console.log(listFromServer)
+        mainVM.items = listFromServer
+      })
+    },
+
+
   data: {
     items: [],
     newItem: '',
-    nothing: '',
-    isDone: false,
-    styleObject: {
-      textDecoration: 'line-through'
-    },
   },  // end of data
 
   methods: {
@@ -37,17 +41,18 @@ var mainVM = new Vue({
       })
     },
 
-    crossOut: function(value, event) {
-      console.log(value.isDone)
-      if(value === 'false') {
-        this.isDone === true
-      } else {
-        this.isDone === false
-      }
+    crossOut: function(item) {
+      console.log(item._id)
+      console.log(item.isDone)
+
+      $.post('/crossOut', {item}, function(dataFromServer) {
+        console.log(dataFromServer)
+      })
+
     },
 
-    created: function() {
-      this.getFreshData()
-    },
+    // created: function() {
+    //   this.getFreshData()
+    // },
   }, // end of methods
 }) // end of mainVM

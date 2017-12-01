@@ -37,7 +37,6 @@
       <form v-on:submit="postNewItem">
         <input v-model='newItem' size="30" placeholder="what do you need to do?"/>
         <input type="submit" value="add item" id="submit"/>
-        <button id="listBtn" v-on:click="getFreshData()"> list </button>
       </form>
     </div>
   </div>
@@ -48,16 +47,19 @@
         <li v-for='(item, index) in items'>
           <span/>
 
-          <div id="results">
-            <button v-on:click="removeItem(item)" id="xbutton">
-              <i class="fa fa-times-circle fa-fw" aria-hidden="true"></i>
-            </button>
+          <div id="results" >
+
+            <input id="checkbox" v-bind:class="{itemDone: item.isDone}" type="checkbox" v-on:click="crossOut(item)" v-model="item.isDone"/>
 
             <span id="resultsText">
-              <span id="todoText">
+              <span id="todoText" v-bind:class="{itemDone: item.isDone}">
                 {{item.itemText}}
               </span>
             </span>
+
+            <button v-on:click="removeItem(item)" id="xbutton">
+              <i class="fa fa-times-circle fa-fw" aria-hidden="true"></i>
+            </button>
 
           </div>
 

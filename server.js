@@ -63,39 +63,17 @@ app.post('/removeItem', function(req,res) {
   })
 })
 
+
 app.post('/crossOut', function(req,res) {
-  if(req.body.isDone === 'false') {
-    ItemModel.findByIdAndUpdate(req.body._id, {$set: {isDone:true}}, {new:true}, function(err, itemCrossedOut) {
-        if(err) {
-          console.log('cross out error - ',err)
-          res.send('error')
-        }
-      res.send(req.body.isDone)
-    })
-  } else if(req.body.isDone === 'true') {
-    ItemModel.findByIdAndUpdate(req.body._id, {$set: {isDone:false}}, {new:true}, function(err, itemCrossedOut) {
-        if(err) {
-          console.log('cross out error - ',err)
-          res.send('error')
-        }
-      res.send(req.body)
-    })
-  }
-
-
+  ItemModel.updateOne({_id:req.body.id}, {$set: {isDone: req.body.isChecked === 'false' ? true : false}}, {new: true}, function(error, info) {
+    if(error) {
+      console.log(error)
+      res.send('error')
+    }
+    console.log('checked --- ', info)
+    res.send(info)
+  })
 })
-
-// app.post('/crossOut', function(req,res) {
-//   console.log('req.body ', req.body)
-//   ItemModel.findByIdAndUpdate(req.body.item._id, {$set: {isDone:true}}, {new:true}, function(err, itemCrossedOut) {
-//     if(err) {
-//       console.log('cross out error - ',err)
-//       res.send('error')
-//     }
-//     res.send(req.body)
-//   })
-//   console.log('body - ', req.body.item.isDone)
-// })
 
 
 
