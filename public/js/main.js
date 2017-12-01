@@ -19,6 +19,7 @@ var mainVM = new Vue({
   methods: {
     postNewItem: function(event) {
       event.preventDefault()
+
       $.post('/newItem', {itemText: mainVM.newItem}, function(dataFromServer) {
         mainVM.items.push(dataFromServer)
         console.log('$.post() - ',dataFromServer)
