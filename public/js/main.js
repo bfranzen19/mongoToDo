@@ -5,6 +5,11 @@ var mainVM = new Vue({
   data: {
     items: [],
     newItem: '',
+    nothing: '',
+    isDone: false,
+    styleObject: {
+      textDecoration: 'line-through'
+    },
   },  // end of data
 
   methods: {
@@ -23,7 +28,7 @@ var mainVM = new Vue({
         mainVM.items = data
         console.log('fresh data from the server: ', data)
       })
-      this.newItem = ''
+      mainVM.newItem = ''
     },
 
     removeItem: function(item) {
@@ -32,10 +37,13 @@ var mainVM = new Vue({
       })
     },
 
-    crossOut: function(item) {
-      $.post('/crossOut', {itemText: item, isDone: true}, function(data) {
-        console.log('completed: ', data)
-      })
+    crossOut: function(value, event) {
+      console.log(value.isDone)
+      if(value === 'false') {
+        this.isDone === true
+      } else {
+        this.isDone === false
+      }
     },
 
     created: function() {

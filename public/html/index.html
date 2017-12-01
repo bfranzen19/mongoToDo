@@ -30,12 +30,14 @@
         <h1> to-do list </h1>
     </div>
   </div>
+  <hr/>
 
   <div class="container">
     <div id="theForm" class="row col-xs-12 col-sm-12 col-md-10 col-lg-8">
       <form v-on:submit="postNewItem">
         <input v-model='newItem' size="30" placeholder="what do you need to do?"/>
         <input type="submit" value="add item" id="submit"/>
+        <button id="listBtn" v-on:click="getFreshData()"> list </button>
       </form>
     </div>
   </div>
@@ -44,14 +46,20 @@
     <div class="row col-xs-12 col-sm-12 col-md-10 col-lg-8" id="items">
       <ul>
         <li v-for='(item, index) in items'>
-          <span v-bind:class="{isDone: item.isDone}">
-            <input id="checkBox" type="checkbox"  v-on:click="crossOut" v-bind:class="{isDone: item.isDone}" v-model="item.isDone"/>
-          <span id="todoText">
-            {{item.itemText}}
-          </span>
-          <button v-on:click="removeItem(item)">
-            <i class="fa fa-times-circle fa-fw" aria-hidden="true"></i>
-          </button>
+          <span/>
+
+          <div id="results">
+            <button v-on:click="removeItem(item)" id="xbutton">
+              <i class="fa fa-times-circle fa-fw" aria-hidden="true"></i>
+            </button>
+
+            <span id="resultsText">
+              <span id="todoText">
+                {{item.itemText}}
+              </span>
+            </span>
+
+          </div>
 
           </span>
         </li>
